@@ -12,7 +12,11 @@
       .guide-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 0.9rem; }
       .guide-grid pre { margin-top: 0.45rem; font-family: var(--f-mono); font-size: 12px; white-space: pre-wrap; color: var(--c-graphite); }
       .guide-grid code { font-family: var(--f-mono); font-size: 12px; }
+      .adv-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 0.9rem; margin-top: 0.9rem; }
+      .adv-grid ul { padding-left: 1.2rem; margin-top: 0.45rem; }
+      .adv-grid li { margin-bottom: 0.35rem; }
       @media (max-width: 900px) { .guide-grid { grid-template-columns: 1fr; } }
+      @media (max-width: 900px) { .adv-grid { grid-template-columns: 1fr; } }
     </style>
   </head>
   <body>
@@ -21,7 +25,7 @@
         <a href="index.html" class="brand-group"><div class="brand-logo">M/T</div><div class="brand-text"><h1>MD Convert</h1><p><span class="lang-en">Plain Text Extraction Tool</span><span class="lang-zh">纯文本提取工具</span></p></div></a>
         <div class="header-right">
           <nav class="top-links" aria-label="Main navigation">
-            <a href="index.html"><span class="lang-en">Converter</span><span class="lang-zh">转换</span></a><a href="history.html"><span class="lang-en">History</span><span class="lang-zh">历史</span></a><a href="markdown-guide.html" class="active"><span class="lang-en">Markdown</span><span class="lang-zh">Markdown</span></a><a href="faq.html"><span class="lang-en">FAQ</span><span class="lang-zh">问答</span></a><a href="about.html"><span class="lang-en">About</span><span class="lang-zh">关于</span></a><a href="contact.html"><span class="lang-en">Contact</span><span class="lang-zh">联系</span></a><a href="privacy.html"><span class="lang-en">Privacy</span><span class="lang-zh">隐私</span></a><a href="terms.html"><span class="lang-en">Terms</span><span class="lang-zh">条款</span></a></nav>
+            <a href="index.html"><span class="lang-en">Converter</span><span class="lang-zh">转换</span></a><a href="history.html"><span class="lang-en">History</span><span class="lang-zh">历史</span></a><a href="markdown-guide.html" class="active"><span class="lang-en">Markdown</span><span class="lang-zh">Markdown</span></a><a href="faq.html"><span class="lang-en">FAQ</span><span class="lang-zh">问答</span></a><a href="about.html"><span class="lang-en">About</span><span class="lang-zh">关于</span></a><a href="privacy.html"><span class="lang-en">Privacy</span><span class="lang-zh">隐私</span></a><a href="terms.html"><span class="lang-en">Terms</span><span class="lang-zh">条款</span></a></nav>
           <div class="utility"><button data-action="toggle-lang">中文</button><button data-action="toggle-theme">Dark</button></div>
           
         </div>
@@ -67,6 +71,37 @@ function hello() {
             <p class="lang-en">The converter strips common Markdown marks and keeps readable plain text output.</p>
             <p class="lang-zh">转换器会移除常见 Markdown 标记，保留可读的纯文本输出。</p>
           </section>
+
+          <section class="card-block">
+            <h3><span class="lang-en">Tables</span><span class="lang-zh">表格语法</span></h3>
+            <pre>| Name | Value |
+| --- | --- |
+| CPU | 8 Core |
+| RAM | 16 GB |</pre>
+          </section>
+
+          <section class="card-block">
+            <h3><span class="lang-en">Task Lists</span><span class="lang-zh">任务列表</span></h3>
+            <pre>- [x] Draft content
+- [x] Review text
+- [ ] Publish page</pre>
+          </section>
+
+          <section class="card-block">
+            <h3><span class="lang-en">Nested Quotes & Lists</span><span class="lang-zh">嵌套引用与列表</span></h3>
+            <pre>> Project notes
+> - Scope defined
+> - Timeline estimated</pre>
+          </section>
+
+          <section class="card-block">
+            <h3><span class="lang-en">Escaping & Footnotes</span><span class="lang-zh">转义与脚注</span></h3>
+            <pre>\\*not italic\\*
+
+Reference[^1]
+
+[^1]: Footnote text.</pre>
+          </section>
         </div>
 
         <div class="card-block">
@@ -76,6 +111,40 @@ function hello() {
             <li><span class="lang-en">Keep lists concise before conversion.</span><span class="lang-zh">转换前保持列表简洁。</span></li>
             <li><span class="lang-en">Use history page to revisit recent conversions.</span><span class="lang-zh">可通过历史页回看最近转换记录。</span></li>
           </ul>
+        </div>
+
+        <div class="card-block">
+          <h3><span class="lang-en">Why Markdown</span><span class="lang-zh">Markdown 的优点</span></h3>
+          <div class="adv-grid">
+            <section>
+              <h4><span class="lang-en">Readable in Raw Text</span><span class="lang-zh">纯文本可读性高</span></h4>
+              <ul>
+                <li><span class="lang-en">Easy to read without rendering.</span><span class="lang-zh">即使不渲染也容易阅读。</span></li>
+                <li><span class="lang-en">Great for notes, docs, and drafts.</span><span class="lang-zh">适合笔记、文档和草稿。</span></li>
+              </ul>
+            </section>
+            <section>
+              <h4><span class="lang-en">Portable and Future-Proof</span><span class="lang-zh">可迁移、长期可用</span></h4>
+              <ul>
+                <li><span class="lang-en">Works across editors and platforms.</span><span class="lang-zh">跨编辑器和平台可用。</span></li>
+                <li><span class="lang-en">No vendor lock-in for your content.</span><span class="lang-zh">内容不受单一平台绑定。</span></li>
+              </ul>
+            </section>
+            <section>
+              <h4><span class="lang-en">Fast Writing Workflow</span><span class="lang-zh">写作效率高</span></h4>
+              <ul>
+                <li><span class="lang-en">Use keyboard symbols instead of toolbar clicks.</span><span class="lang-zh">用键盘符号代替频繁点工具栏。</span></li>
+                <li><span class="lang-en">Quickly convert into plain text when needed.</span><span class="lang-zh">可快速转换为纯文本使用。</span></li>
+              </ul>
+            </section>
+            <section>
+              <h4><span class="lang-en">Version Control Friendly</span><span class="lang-zh">适合版本管理</span></h4>
+              <ul>
+                <li><span class="lang-en">Clean diffs in Git.</span><span class="lang-zh">在 Git 中差异清晰。</span></li>
+                <li><span class="lang-en">Easy collaboration and review.</span><span class="lang-zh">便于协作与审阅。</span></li>
+              </ul>
+            </section>
+          </div>
         </div>
       </main>
     </div>
