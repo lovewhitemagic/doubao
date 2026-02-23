@@ -1,0 +1,92 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Markdown Guide | MD Text Tool</title>
+    <meta name="description" content="A quick Markdown introduction with syntax examples and writing tips." />
+    <script>(() => { const t = localStorage.getItem("md_theme_v1") || "light"; const l = localStorage.getItem("md_lang_v1") || "en"; document.documentElement.setAttribute("data-theme", t); document.documentElement.setAttribute("data-lang", l); document.documentElement.lang = l === "zh" ? "zh-CN" : "en"; })();</script>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700&display=swap" rel="stylesheet" />
+    <link rel="stylesheet" href="site-common.css" />
+    <style>
+      .guide-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 0.9rem; }
+      .guide-grid pre { margin-top: 0.45rem; font-family: var(--f-mono); font-size: 12px; white-space: pre-wrap; color: var(--c-graphite); }
+      .guide-grid code { font-family: var(--f-mono); font-size: 12px; }
+      @media (max-width: 900px) { .guide-grid { grid-template-columns: 1fr; } }
+    </style>
+  </head>
+  <body>
+    <div class="app-container">
+      <header>
+        <a href="index.html" class="brand-group"><div class="brand-logo">M/T</div><div class="brand-text"><h1>MD Convert</h1><p><span class="lang-en">Plain Text Extraction Tool</span><span class="lang-zh">纯文本提取工具</span></p></div></a>
+        <div class="header-right">
+          <nav class="top-links" aria-label="Main navigation">
+            <a href="index.html"><span class="lang-en">Converter</span><span class="lang-zh">转换</span></a><a href="history.html"><span class="lang-en">History</span><span class="lang-zh">历史</span></a><a href="markdown-guide.html" class="active"><span class="lang-en">Markdown</span><span class="lang-zh">Markdown</span></a><a href="faq.html"><span class="lang-en">FAQ</span><span class="lang-zh">问答</span></a><a href="about.html"><span class="lang-en">About</span><span class="lang-zh">关于</span></a><a href="contact.html"><span class="lang-en">Contact</span><span class="lang-zh">联系</span></a><a href="privacy.html"><span class="lang-en">Privacy</span><span class="lang-zh">隐私</span></a><a href="terms.html"><span class="lang-en">Terms</span><span class="lang-zh">条款</span></a></nav>
+          <div class="utility"><button data-action="toggle-lang">中文</button><button data-action="toggle-theme">Dark</button></div>
+          
+        </div>
+      </header>
+
+      <main class="content-main">
+        <span class="decoration-line"></span>
+        <h2 class="section-title"><span class="lang-en">Markdown Guide</span><span class="lang-zh">Markdown 介绍</span></h2>
+
+        <p class="lang-en">Markdown is a lightweight markup language used to format plain text with simple symbols.</p>
+        <p class="lang-zh">Markdown 是一种轻量标记语言，通过简单符号对纯文本进行格式化。</p>
+
+        <div class="guide-grid">
+          <section class="card-block">
+            <h3><span class="lang-en">Basic Syntax</span><span class="lang-zh">基础语法</span></h3>
+            <pre># Heading
+**Bold** and *Italic*
+- Item A
+- Item B
+[Link](https://example.com)</pre>
+          </section>
+
+          <section class="card-block">
+            <h3><span class="lang-en">Code</span><span class="lang-zh">代码</span></h3>
+            <pre>Inline: `const x = 1`
+
+```js
+function hello() {
+  console.log("Hi");
+}
+```</pre>
+          </section>
+
+          <section class="card-block">
+            <h3><span class="lang-en">Quote and Rule</span><span class="lang-zh">引用与分隔线</span></h3>
+            <pre>> A quoted line
+
+---</pre>
+          </section>
+
+          <section class="card-block">
+            <h3><span class="lang-en">How This Tool Uses It</span><span class="lang-zh">本工具如何处理</span></h3>
+            <p class="lang-en">The converter strips common Markdown marks and keeps readable plain text output.</p>
+            <p class="lang-zh">转换器会移除常见 Markdown 标记，保留可读的纯文本输出。</p>
+          </section>
+        </div>
+
+        <div class="card-block">
+          <h3><span class="lang-en">Tips</span><span class="lang-zh">使用建议</span></h3>
+          <ul style="padding-left:1.2rem; margin-top:0.45rem;">
+            <li><span class="lang-en">Use short headings to make output easier to scan.</span><span class="lang-zh">使用简短标题便于输出内容快速浏览。</span></li>
+            <li><span class="lang-en">Keep lists concise before conversion.</span><span class="lang-zh">转换前保持列表简洁。</span></li>
+            <li><span class="lang-en">Use history page to revisit recent conversions.</span><span class="lang-zh">可通过历史页回看最近转换记录。</span></li>
+          </ul>
+        </div>
+      </main>
+
+      <footer class="footer">
+        <small>© 2026 MD Text Tool</small>
+        <nav class="bottom-links" aria-label="Footer links">
+          
+          <a href="markdown-guide.html" class="active"><span class="lang-en">Markdown</span><span class="lang-zh">Markdown</span></a><a href="faq.html"><span class="lang-en">FAQ</span><span class="lang-zh">问答</span></a><a href="terms.html"><span class="lang-en">Terms</span><span class="lang-zh">条款</span></a></nav>
+      </footer>
+    </div>
+
+    <script src="site-common.js"></script>
+  </body>
+</html>
