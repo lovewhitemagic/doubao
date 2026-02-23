@@ -1,24 +1,24 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   <url>
-    <loc>/index.html</loc>
+    <loc>https://markdown2plain.cn/</loc>
   </url>
   <url>
-    <loc>/history.html</loc>
+    <loc>https://markdown2plain.cn/history.html</loc>
   </url>
   <url>
-    <loc>/markdown-guide.html</loc>
+    <loc>https://markdown2plain.cn/markdown-guide.html</loc>
   </url>
   <url>
-    <loc>/faq.html</loc>
+    <loc>https://markdown2plain.cn/faq.html</loc>
   </url>
   <url>
-    <loc>/about.html</loc>
+    <loc>https://markdown2plain.cn/about.html</loc>
   </url>
   <url>
-    <loc>/privacy.html</loc>
+    <loc>https://markdown2plain.cn/privacy.html</loc>
   </url>
   <url>
-    <loc>/terms.html</loc>
+    <loc>https://markdown2plain.cn/terms.html</loc>
   </url>
 </urlset>
