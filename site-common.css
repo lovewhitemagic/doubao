@@ -15,7 +15,7 @@ html[data-theme="dark"] {
   --c-ink: #f2f2f2;
   --c-graphite: #b1b1b1;
   --c-line: #2f2f2f;
-  --c-bg: #0f0f0f;
+  --c-bg: #161616;
   --c-muted-bg: #1b1b1b;
   --c-accent: #f2f2f2;
 }
@@ -40,7 +40,7 @@ body {
   font-family: var(--f-sans);
   font-size: 14px;
   line-height: 1.7;
-  min-height: 100vh;
+  min-height: 100dvh;
   display: flex;
   justify-content: stretch;
   padding: 0;
@@ -51,7 +51,7 @@ body {
   background: var(--c-paper);
   width: 100%;
   max-width: none;
-  min-height: 100vh;
+  min-height: 100dvh;
   display: flex;
   flex-direction: column;
   overflow: hidden;
@@ -385,9 +385,9 @@ textarea,
   }
 
   .app-container {
-    min-height: 100vh;
+    min-height: 100dvh;
     max-width: none;
-    width: 100vw;
+    width: 100%;
   }
 
   header,
