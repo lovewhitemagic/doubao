@@ -1,0 +1,35 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Page Not Found | MD Text Tool</title>
+    <meta name="description" content="The page could not be found. Return to MD Convert home page." />
+    <script>(() => { const t = localStorage.getItem("md_theme_v1") || "light"; const l = localStorage.getItem("md_lang_v1") || "en"; document.documentElement.setAttribute("data-theme", t); document.documentElement.setAttribute("data-lang", l); document.documentElement.lang = l === "zh" ? "zh-CN" : "en"; })();</script>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700&display=swap" rel="stylesheet" />
+    <link rel="stylesheet" href="site-common.css" />
+    <style>
+      .not-found { max-width: 680px; margin: auto; padding: 3rem; }
+      .not-found h1 { font-size: 2.2rem; margin-bottom: 0.6rem; }
+      .not-found p { margin-bottom: 0.6rem; color: var(--c-graphite); }
+      .not-found .utility { margin-top: 1rem; }
+    </style>
+  </head>
+  <body>
+    <div class="app-container" style="min-height:60vh;">
+      <main class="content-main not-found">
+        <div class="decoration-line"></div>
+        <h1>404</h1>
+        <p><span class="lang-en">The page does not exist or has been moved.</span><span class="lang-zh">页面不存在或已被移动。</span></p>
+        <p><span class="lang-en">Return to the converter or open conversion history.</span><span class="lang-zh">请返回转换页或查看历史页。</span></p>
+        <div class="utility">
+          <a class="btn primary" href="index.html"><span class="lang-en">Converter</span><span class="lang-zh">转换</span></a>
+          <a class="btn" href="history.html"><span class="lang-en">History</span><span class="lang-zh">历史</span></a>
+          <button data-action="toggle-lang">中文</button>
+          <button data-action="toggle-theme">Dark</button>
+        </div>
+      </main>
+    </div>
+    <script src="site-common.js"></script>
+  </body>
+</html>

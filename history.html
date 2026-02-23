@@ -1,0 +1,220 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>MD CONVERT | Conversion History</title>
+    <meta name="description" content="View and manage local conversion history for MD Convert." />
+    <script>
+      (() => {
+        const theme = localStorage.getItem("md_theme_v1") || "light";
+        const lang = localStorage.getItem("md_lang_v1") || "en";
+        document.documentElement.setAttribute("data-theme", theme);
+        document.documentElement.setAttribute("data-lang", lang);
+        document.documentElement.lang = lang === "zh" ? "zh-CN" : "en";
+      })();
+    </script>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700&display=swap" rel="stylesheet" />
+    <link rel="stylesheet" href="site-common.css" />
+  </head>
+  <body>
+    <div class="app-container">
+      <header>
+        <a href="index.html" class="brand-group">
+          <div class="brand-logo">M/T</div>
+          <div class="brand-text">
+            <h1>MD Convert</h1>
+            <p><span class="lang-en">Plain Text Extraction Tool</span><span class="lang-zh">纯文本提取工具</span></p>
+          </div>
+        </a>
+        <div class="header-right">
+          <nav class="top-links" aria-label="Main navigation">
+            <a href="index.html"><span class="lang-en">Converter</span><span class="lang-zh">转换</span></a>
+            <a href="history.html" class="active"><span class="lang-en">History</span><span class="lang-zh">历史</span></a>
+            <a href="faq.html"><span class="lang-en">FAQ</span><span class="lang-zh">问答</span></a>
+            <a href="about.html"><span class="lang-en">About</span><span class="lang-zh">关于</span></a>
+            <a href="contact.html"><span class="lang-en">Contact</span><span class="lang-zh">联系</span></a>
+            <a href="privacy.html"><span class="lang-en">Privacy</span><span class="lang-zh">隐私</span></a>
+            <a href="terms.html"><span class="lang-en">Terms</span><span class="lang-zh">条款</span></a>
+          </nav>
+          <div class="utility">
+            <button data-action="toggle-lang">中文</button>
+            <button data-action="toggle-theme">Dark</button>
+          </div>
+          <div class="header-meta">
+            <p>Version 1.2.0</p>
+            <p><span class="lang-en">Local Processing</span><span class="lang-zh">本地处理</span></p>
+            <p>UTF-8 Encoded</p>
+          </div>
+        </div>
+      </header>
+
+      <main class="content-main">
+        <div class="decoration-line"></div>
+        <div style="display:flex;justify-content:space-between;align-items:flex-end;gap:1rem;flex-wrap:wrap;margin-bottom:1rem;">
+          <h2 class="section-title" style="margin:0"><span class="lang-en">Conversion History</span><span class="lang-zh">转换历史</span></h2>
+          <button id="clear-history"></button>
+        </div>
+
+        <table class="history-table" aria-label="Conversion history table">
+          <thead>
+            <tr>
+              <th style="width: 50%"><span class="lang-en">Document</span><span class="lang-zh">文档</span></th>
+              <th style="width: 20%"><span class="lang-en">Date &amp; Time</span><span class="lang-zh">时间</span></th>
+              <th style="width: 15%"><span class="lang-en">Length</span><span class="lang-zh">长度</span></th>
+              <th style="width: 15%; text-align: right"><span class="lang-en">Actions</span><span class="lang-zh">操作</span></th>
+            </tr>
+          </thead>
+          <tbody id="history-list"></tbody>
+        </table>
+      </main>
+
+      <footer class="footer">
+        <small>© 2026 MD Text Tool</small>
+        <nav class="bottom-links" aria-label="Footer links">
+          <a href="history.html" class="active"><span class="lang-en">History</span><span class="lang-zh">历史</span></a>
+          <a href="faq.html"><span class="lang-en">FAQ</span><span class="lang-zh">问答</span></a>
+          <a href="privacy.html"><span class="lang-en">Privacy Policy</span><span class="lang-zh">隐私政策</span></a>
+          <a href="terms.html"><span class="lang-en">Terms</span><span class="lang-zh">条款</span></a>
+        </nav>
+      </footer>
+    </div>
+
+    <script src="site-common.js"></script>
+    <script>
+      const HISTORY_KEY = "md_convert_history_v1";
+      const historyList = document.getElementById("history-list");
+      const clearBtn = document.getElementById("clear-history");
+
+      const i18n = {
+        en: {
+          clearHistory: "Clear History",
+          empty: "No recent conversions found.",
+          copy: "Copy Text",
+          copied: "Copied",
+          chars: "chars",
+          unknown: "Unknown",
+          confirm: "Are you sure you want to clear your local history?",
+        },
+        zh: {
+          clearHistory: "清空历史",
+          empty: "暂无转换记录。",
+          copy: "复制文本",
+          copied: "已复制",
+          chars: "字符",
+          unknown: "未知",
+          confirm: "确认清空本地历史记录吗？",
+        },
+      };
+
+      function lang() {
+        return document.documentElement.getAttribute("data-lang") === "zh" ? "zh" : "en";
+      }
+
+      function t(key) {
+        return i18n[lang()][key] || "";
+      }
+
+      function getHistory() {
+        try {
+          const raw = localStorage.getItem(HISTORY_KEY);
+          const parsed = raw ? JSON.parse(raw) : [];
+          return Array.isArray(parsed) ? parsed : [];
+        } catch {
+          return [];
+        }
+      }
+
+      function saveHistory(items) {
+        try {
+          localStorage.setItem(HISTORY_KEY, JSON.stringify(items));
+        } catch {}
+      }
+
+      function formatDate(iso) {
+        const d = new Date(iso);
+        if (Number.isNaN(d.getTime())) return t("unknown");
+        return new Intl.DateTimeFormat(lang() === "zh" ? "zh-CN" : "en-US", {
+          year: "numeric",
+          month: "short",
+          day: "2-digit",
+          hour: "2-digit",
+          minute: "2-digit",
+        }).format(d);
+      }
+
+      function escapeHtml(value) {
+        return String(value)
+          .replaceAll("&", "&amp;")
+          .replaceAll("<", "&lt;")
+          .replaceAll(">", "&gt;")
+          .replaceAll('"', "&quot;")
+          .replaceAll("'", "&#39;");
+      }
+
+      function renderHistory() {
+        const history = getHistory();
+        clearBtn.textContent = t("clearHistory");
+
+        if (!history.length) {
+          historyList.innerHTML = `<tr><td colspan="4" class="empty-state">${escapeHtml(t("empty"))}</td></tr>`;
+          return;
+        }
+
+        historyList.innerHTML = history
+          .map((item) => {
+            const preview = ((item.plainText || "").replace(/\s+/g, " ").trim() || "(empty)").slice(0, 160);
+            const fileName = item.sourceName || "manual_input.md";
+            const safeId = escapeHtml(item.id || "");
+
+            return `
+              <tr>
+                <td>
+                  <span class="file-name">${escapeHtml(fileName)}</span>
+                  <div class="file-preview">${escapeHtml(preview)}</div>
+                </td>
+                <td class="timestamp">${escapeHtml(formatDate(item.createdAt))}</td>
+                <td class="stats">${Number(item.length || 0).toLocaleString()} ${escapeHtml(t("chars"))}</td>
+                <td class="actions">
+                  <button class="primary" data-copy-id="${safeId}">${escapeHtml(t("copy"))}</button>
+                </td>
+              </tr>
+            `;
+          })
+          .join("");
+      }
+
+      async function copyById(id, button) {
+        const history = getHistory();
+        const target = history.find((item) => item.id === id);
+        if (!target || !target.plainText) return;
+
+        try {
+          await navigator.clipboard.writeText(target.plainText);
+          const original = t("copy");
+          button.textContent = t("copied");
+          setTimeout(() => {
+            button.textContent = original;
+          }, 1200);
+        } catch {}
+      }
+
+      historyList.addEventListener("click", (event) => {
+        const target = event.target;
+        if (!(target instanceof HTMLButtonElement)) return;
+        const id = target.getAttribute("data-copy-id");
+        if (!id) return;
+        copyById(id, target);
+      });
+
+      clearBtn.addEventListener("click", () => {
+        if (!window.confirm(t("confirm"))) return;
+        saveHistory([]);
+        renderHistory();
+      });
+
+      document.addEventListener("app:langchange", renderHistory);
+      renderHistory();
+    </script>
+  </body>
+</html>

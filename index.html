@@ -1,0 +1,396 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Markdown to Text Converter</title>
+    <meta
+      name="description"
+      content="Free Markdown to Text Converter. Paste Markdown or import .md files, then copy or download clean plain text instantly."
+    />
+    <script>
+      (() => {
+        const theme = localStorage.getItem("md_theme_v1") || "light";
+        const lang = localStorage.getItem("md_lang_v1") || "en";
+        document.documentElement.setAttribute("data-theme", theme);
+        document.documentElement.setAttribute("data-lang", lang);
+        document.documentElement.lang = lang === "zh" ? "zh-CN" : "en";
+      })();
+    </script>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700&display=swap" rel="stylesheet" />
+    <link rel="stylesheet" href="site-common.css" />
+  </head>
+  <body>
+    <div class="app-container">
+      <header>
+        <a href="index.html" class="brand-group">
+          <div class="brand-logo">M/T</div>
+          <div class="brand-text">
+            <h1>MD Convert</h1>
+            <p>
+              <span class="lang-en">Plain Text Extraction Tool</span>
+              <span class="lang-zh">纯文本提取工具</span>
+            </p>
+          </div>
+        </a>
+
+        <div class="header-right">
+          <nav class="top-links" aria-label="Main navigation">
+            <a href="index.html" class="active"><span class="lang-en">Converter</span><span class="lang-zh">转换</span></a>
+            <a href="history.html"><span class="lang-en">History</span><span class="lang-zh">历史</span></a>
+            <a href="faq.html"><span class="lang-en">FAQ</span><span class="lang-zh">问答</span></a>
+            <a href="about.html"><span class="lang-en">About</span><span class="lang-zh">关于</span></a>
+            <a href="contact.html"><span class="lang-en">Contact</span><span class="lang-zh">联系</span></a>
+            <a href="privacy.html"><span class="lang-en">Privacy</span><span class="lang-zh">隐私</span></a>
+            <a href="terms.html"><span class="lang-en">Terms</span><span class="lang-zh">条款</span></a>
+          </nav>
+          <div class="utility">
+            <button id="lang-toggle" data-action="toggle-lang">中文</button>
+            <button id="theme-toggle" data-action="toggle-theme">Dark</button>
+          </div>
+          <div class="header-meta">
+            <p>Version 1.2.0</p>
+            <p><span class="lang-en">Local Processing</span><span class="lang-zh">本地处理</span></p>
+            <p>UTF-8 Encoded</p>
+          </div>
+        </div>
+      </header>
+
+      <main class="workspace">
+        <section class="panel" id="drop-zone" aria-label="Source input">
+          <div class="panel-header">
+            <div>
+              <span class="decoration-line"></span>
+              <h2 class="section-title"><span class="lang-en">Source Input</span><span class="lang-zh">输入内容</span></h2>
+            </div>
+            <div class="utility">
+              <input id="file-input" class="sr-only" type="file" accept=".md,text/markdown,text/plain" />
+              <button id="import"></button>
+              <button id="sample"></button>
+              <button id="clear"></button>
+            </div>
+          </div>
+          <div class="editor-area">
+            <textarea id="input" spellcheck="false"></textarea>
+          </div>
+        </section>
+
+        <div class="divider" aria-hidden="true"></div>
+
+        <section class="panel" aria-label="Plain output">
+          <div class="panel-header">
+            <div>
+              <span class="decoration-line"></span>
+              <h2 class="section-title"><span class="lang-en">Plain Output</span><span class="lang-zh">纯文本输出</span></h2>
+            </div>
+            <div class="utility">
+              <button id="download"></button>
+              <button id="copy" class="primary"></button>
+            </div>
+          </div>
+          <div class="editor-area">
+            <pre id="output" class="output-view"></pre>
+          </div>
+        </section>
+      </main>
+
+      <section class="notes">
+        <p id="hint" class="hint"></p>
+      </section>
+
+      <footer class="footer">
+        <small>© 2026 MD Text Tool</small>
+        <nav class="bottom-links" aria-label="Footer links">
+          <a href="history.html"><span class="lang-en">History</span><span class="lang-zh">历史</span></a>
+          <a href="faq.html"><span class="lang-en">FAQ</span><span class="lang-zh">问答</span></a>
+          <a href="about.html"><span class="lang-en">About</span><span class="lang-zh">关于</span></a>
+          <a href="contact.html"><span class="lang-en">Contact</span><span class="lang-zh">联系</span></a>
+          <a href="privacy.html"><span class="lang-en">Privacy Policy</span><span class="lang-zh">隐私政策</span></a>
+          <a href="terms.html"><span class="lang-en">Terms</span><span class="lang-zh">条款</span></a>
+        </nav>
+      </footer>
+    </div>
+
+    <script src="site-common.js"></script>
+    <script>
+      const input = document.getElementById("input");
+      const output = document.getElementById("output");
+      const hint = document.getElementById("hint");
+      const dropZone = document.getElementById("drop-zone");
+      const fileInput = document.getElementById("file-input");
+      const importBtn = document.getElementById("import");
+      const sampleBtn = document.getElementById("sample");
+      const clearBtn = document.getElementById("clear");
+      const copyBtn = document.getElementById("copy");
+      const downloadBtn = document.getElementById("download");
+      const HISTORY_KEY = "md_convert_history_v1";
+      const HISTORY_LIMIT = 100;
+
+      const sampleMarkdown = `# Project Alpha
+
+This document outlines the **core requirements** for the new initiative.
+
+## 1. Objectives
+- Increase efficiency by 20%
+- Reduce *visual noise*
+- Implement [new design system](http://example.com)
+
+> "Design is intelligence made visible."
+
+Code example:
+\`console.log("Hello World");\`
+`;
+
+      const i18n = {
+        en: {
+          import: "Import .md",
+          sample: "Sample",
+          clear: "Clear",
+          copy: "Copy Text",
+          copied: "Copied",
+          download: "Download .txt",
+          placeholder: "Paste your markdown here...\\n\\n# Example\\nThis is **bold** text.",
+          hintDefault: "Drag and drop a .md file into the left panel, or use Import .md.",
+          hintType: "Only .md or text files are supported.",
+          hintImported: "Imported: {name}",
+          hintReadFail: "Failed to read file.",
+          hintNoDownload: "Nothing to download.",
+          hintDownloaded: "Downloaded: converted.txt",
+          hintSample: "Sample loaded.",
+          hintCleared: "Input cleared.",
+          hintNoCopy: "Nothing to copy.",
+          hintCopied: "Copied to clipboard.",
+          hintCopyFail: "Copy failed. Please copy manually.",
+          storageFail: "History storage is unavailable in this browser.",
+        },
+        zh: {
+          import: "导入 .md",
+          sample: "示例",
+          clear: "清空",
+          copy: "复制文本",
+          copied: "已复制",
+          download: "下载 .txt",
+          placeholder: "在这里粘贴 Markdown...\\n\\n# 示例\\n这是 **加粗** 文本。",
+          hintDefault: "将 .md 文件拖到左侧面板，或点击“导入 .md”。",
+          hintType: "仅支持 .md 或文本文件。",
+          hintImported: "已导入：{name}",
+          hintReadFail: "读取文件失败。",
+          hintNoDownload: "没有可下载内容。",
+          hintDownloaded: "已下载：converted.txt",
+          hintSample: "已载入示例。",
+          hintCleared: "已清空输入。",
+          hintNoCopy: "没有可复制内容。",
+          hintCopied: "已复制到剪贴板。",
+          hintCopyFail: "复制失败，请手动复制。",
+          storageFail: "当前浏览器无法保存历史记录。",
+        },
+      };
+
+      function currentLang() {
+        return document.documentElement.getAttribute("data-lang") === "zh" ? "zh" : "en";
+      }
+
+      function t(key, vars) {
+        let message = i18n[currentLang()][key] || "";
+        if (!vars) return message;
+        Object.entries(vars).forEach(([k, v]) => {
+          message = message.replace(`{${k}}`, String(v));
+        });
+        return message;
+      }
+
+      function markdownToText(md) {
+        if (!md) return "";
+        let text = md;
+
+        text = text.replace(/^\s{0,3}```[\s\S]*?```\s*$/gm, (block) => {
+          return block.replace(/^\s{0,3}```\w*\n?/, "").replace(/```\s*$/, "");
+        });
+
+        text = text.replace(/^\s{0,3}#{1,6}\s*/gm, "");
+        text = text.replace(/^\s{0,3}>\s?/gm, "");
+        text = text.replace(/^\s{0,3}([-*+]|\d+\.)\s+/gm, "");
+        text = text.replace(/!\[([^\]]*)\]\([^)]*\)/g, "$1");
+        text = text.replace(/\[([^\]]+)\]\([^)]*\)/g, "$1");
+        text = text.replace(/`([^`]+)`/g, "$1");
+        text = text.replace(/(\*\*|__)(.*?)\1/g, "$2");
+        text = text.replace(/(\*|_)(.*?)\1/g, "$2");
+        text = text.replace(/~~(.*?)~~/g, "$1");
+        text = text.replace(/^\s{0,3}(-{3,}|\*{3,}|_{3,})\s*$/gm, "");
+        text = text.replace(/\n{3,}/g, "\n\n");
+
+        return text.trim();
+      }
+
+      function getHistory() {
+        try {
+          const raw = localStorage.getItem(HISTORY_KEY);
+          const parsed = raw ? JSON.parse(raw) : [];
+          return Array.isArray(parsed) ? parsed : [];
+        } catch {
+          return [];
+        }
+      }
+
+      function saveHistory(items) {
+        try {
+          localStorage.setItem(HISTORY_KEY, JSON.stringify(items));
+        } catch {
+          setHint(t("storageFail"));
+        }
+      }
+
+      function addHistoryEntry(sourceName = "manual_input.md") {
+        const markdown = input.value;
+        const plainText = output.textContent || markdownToText(markdown);
+        if (!plainText) return;
+
+        const history = getHistory();
+        const latest = history[0];
+        const isDuplicate = latest && latest.markdown === markdown && latest.plainText === plainText && latest.sourceName === sourceName;
+        if (isDuplicate) return;
+
+        history.unshift({
+          id: `${Date.now()}_${Math.random().toString(36).slice(2, 8)}`,
+          sourceName,
+          markdown,
+          plainText,
+          length: plainText.length,
+          createdAt: new Date().toISOString(),
+        });
+
+        saveHistory(history.slice(0, HISTORY_LIMIT));
+      }
+
+      function render() {
+        output.textContent = markdownToText(input.value);
+      }
+
+      function setHint(message) {
+        hint.textContent = message;
+      }
+
+      function updateLocalizedUi() {
+        importBtn.textContent = t("import");
+        sampleBtn.textContent = t("sample");
+        clearBtn.textContent = t("clear");
+        copyBtn.textContent = t("copy");
+        downloadBtn.textContent = t("download");
+        input.placeholder = t("placeholder");
+        setHint(t("hintDefault"));
+      }
+
+      async function importMarkdownFile(file) {
+        if (!file) return;
+
+        const isMd = /\.md$/i.test(file.name);
+        const isTextLike = !file.type || file.type.startsWith("text/");
+        if (!isMd && !isTextLike) {
+          setHint(t("hintType"));
+          return;
+        }
+
+        try {
+          const content = await file.text();
+          input.value = content;
+          render();
+          addHistoryEntry(file.name);
+          setHint(t("hintImported", { name: file.name }));
+        } catch {
+          setHint(t("hintReadFail"));
+        }
+      }
+
+      function downloadTextFile() {
+        const text = output.textContent || markdownToText(input.value);
+        if (!text) {
+          setHint(t("hintNoDownload"));
+          return;
+        }
+
+        const blob = new Blob([text], { type: "text/plain;charset=utf-8" });
+        const url = URL.createObjectURL(blob);
+        const link = document.createElement("a");
+        link.href = url;
+        link.download = "converted.txt";
+        document.body.appendChild(link);
+        link.click();
+        link.remove();
+        URL.revokeObjectURL(url);
+        addHistoryEntry("downloaded_output.md");
+        setHint(t("hintDownloaded"));
+      }
+
+      input.addEventListener("input", render);
+
+      importBtn.addEventListener("click", () => fileInput.click());
+
+      fileInput.addEventListener("change", () => {
+        const file = fileInput.files && fileInput.files[0];
+        importMarkdownFile(file);
+        fileInput.value = "";
+      });
+
+      ["dragenter", "dragover"].forEach((eventName) => {
+        dropZone.addEventListener(eventName, (event) => {
+          event.preventDefault();
+          dropZone.classList.add("drop-active");
+        });
+      });
+
+      ["dragleave", "drop"].forEach((eventName) => {
+        dropZone.addEventListener(eventName, (event) => {
+          event.preventDefault();
+          dropZone.classList.remove("drop-active");
+        });
+      });
+
+      dropZone.addEventListener("drop", (event) => {
+        const file = event.dataTransfer && event.dataTransfer.files[0];
+        importMarkdownFile(file);
+      });
+
+      sampleBtn.addEventListener("click", () => {
+        input.value = sampleMarkdown;
+        render();
+        addHistoryEntry("sample.md");
+        setHint(t("hintSample"));
+      });
+
+      clearBtn.addEventListener("click", () => {
+        input.value = "";
+        render();
+        setHint(t("hintCleared"));
+        input.focus();
+      });
+
+      copyBtn.addEventListener("click", async () => {
+        const text = output.textContent;
+        if (!text) {
+          setHint(t("hintNoCopy"));
+          return;
+        }
+
+        try {
+          await navigator.clipboard.writeText(text);
+          addHistoryEntry("copied_output.md");
+          const originalText = t("copy");
+          copyBtn.textContent = t("copied");
+          setHint(t("hintCopied"));
+          setTimeout(() => {
+            copyBtn.textContent = originalText;
+          }, 1200);
+        } catch {
+          setHint(t("hintCopyFail"));
+        }
+      });
+
+      downloadBtn.addEventListener("click", downloadTextFile);
+      document.addEventListener("app:langchange", updateLocalizedUi);
+
+      input.value = sampleMarkdown;
+      render();
+      updateLocalizedUi();
+    </script>
+  </body>
+</html>
