@@ -8,8 +8,18 @@
     <script>(() => { const t = localStorage.getItem("md_theme_v1") || "light"; const l = localStorage.getItem("md_lang_v1") || "en"; document.documentElement.setAttribute("data-theme", t); document.documentElement.setAttribute("data-lang", l); document.documentElement.lang = l === "zh" ? "zh-CN" : "en"; })();</script>
     <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700&display=swap" rel="stylesheet" />
     <link rel="stylesheet" href="site-common.css" />
+    <style>
+      .about-page .app-container {
+        min-height: auto;
+      }
+      .about-copy {
+        margin-top: 1.1rem;
+        font-size: 0.86rem;
+        color: var(--c-graphite);
+      }
+    </style>
   </head>
-  <body>
+  <body class="about-page">
     <div class="app-container">
       <header>
         <a href="index.html" class="brand-group"><div class="brand-logo">M/T</div><div class="brand-text"><h1>MD Convert</h1><p><span class="lang-en">Plain Text Extraction Tool</span><span class="lang-zh">纯文本提取工具</span></p></div></a>
@@ -34,8 +44,8 @@
             <li><span class="lang-en">Local conversion history</span><span class="lang-zh">本地转换历史</span></li>
           </ul>
         </div>
+        <p class="about-copy"><span class="lang-en">About · © 2026 MD Text Tool</span><span class="lang-zh">关于 · © 2026 MD Text Tool</span></p>
       </main>
-      <footer class="footer"><small><span class="lang-en">About · © 2026 MD Text Tool</span><span class="lang-zh">关于 · © 2026 MD Text Tool</span></small></footer>
     </div>
     <script src="site-common.js"></script>
   </body>
