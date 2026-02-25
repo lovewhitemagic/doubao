@@ -8,7 +8,16 @@
     <script>(() => { const t = localStorage.getItem("md_theme_v1") || "light"; const l = localStorage.getItem("md_lang_v1") || "en"; document.documentElement.setAttribute("data-theme", t); document.documentElement.setAttribute("data-lang", l); document.documentElement.lang = l === "zh" ? "zh-CN" : "en"; })();</script>
     <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700&display=swap" rel="stylesheet" />
     <link rel="stylesheet" href="site-common.css" />
-  </head>
+    <!-- Google tag (gtag.js) -->
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-H9R32RYPKL"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag("js", new Date());
+
+    gtag("config", "G-H9R32RYPKL");
+  </script>
+</head>
   <body>
     <div class="app-container">
       <header>
