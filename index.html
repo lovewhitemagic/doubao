@@ -17,8 +17,85 @@
         document.documentElement.lang = lang === "zh" ? "zh-CN" : "en";
       })();
     </script>
-    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700&display=swap" rel="stylesheet" />
+    <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500&family=Space+Grotesk:wght@400;500;700&display=swap" rel="stylesheet" />
     <link rel="stylesheet" href="site-common.css" />
+    <style>
+      .hero-copy {
+        padding: 1.3rem 3rem 0;
+      }
+
+      .hero-title {
+        font-size: 1rem;
+        text-transform: uppercase;
+        letter-spacing: 1px;
+        margin-bottom: 0.7rem;
+      }
+
+      .hero-lead {
+        max-width: 920px;
+        color: var(--c-graphite);
+        font-size: 0.9rem;
+      }
+
+      .hero-points {
+        display: grid;
+        grid-template-columns: repeat(3, minmax(0, 1fr));
+        gap: 0.9rem;
+        margin-top: 1rem;
+      }
+
+      .hero-points .card-block h3 {
+        margin-bottom: 0.45rem;
+      }
+
+      .example-grid {
+        display: grid;
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+        gap: 1rem;
+      }
+
+      .example-box {
+        border: 1px solid var(--c-line);
+        background: var(--c-muted-bg);
+        padding: 1rem;
+      }
+
+      .example-box pre {
+        white-space: pre-wrap;
+        font-family: var(--f-mono);
+        font-size: 0.8rem;
+        line-height: 1.7;
+        color: var(--c-graphite);
+      }
+
+      .summary-grid {
+        display: grid;
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+        gap: 1rem;
+      }
+
+      .compact-list {
+        padding-left: 1.2rem;
+        margin-top: 0.6rem;
+      }
+
+      .compact-list li + li {
+        margin-top: 0.4rem;
+      }
+
+      @media (max-width: 900px) {
+        .hero-copy {
+          padding-left: 1.2rem;
+          padding-right: 1.2rem;
+        }
+
+        .hero-points,
+        .example-grid,
+        .summary-grid {
+          grid-template-columns: 1fr;
+        }
+      }
+    </style>
     <!-- Google tag (gtag.js) -->
   <script async src="https://www.googletagmanager.com/gtag/js?id=G-H9R32RYPKL"></script>
   <script>
@@ -44,15 +121,35 @@
         </a>
 
         <div class="header-right">
-          <nav class="top-links" aria-label="Main navigation">
-            <a href="index.html" class="active"><span class="lang-en">Converter</span><span class="lang-zh">转换</span></a><a href="history.html"><span class="lang-en">History</span><span class="lang-zh">历史</span></a><a href="markdown-guide.html"><span class="lang-en">Markdown</span><span class="lang-zh">Markdown</span></a><a href="faq.html"><span class="lang-en">FAQ</span><span class="lang-zh">问答</span></a><a href="about.html"><span class="lang-en">About</span><span class="lang-zh">关于</span></a><a href="privacy.html"><span class="lang-en">Privacy</span><span class="lang-zh">隐私</span></a><a href="terms.html"><span class="lang-en">Terms</span><span class="lang-zh">条款</span></a></nav>
           <div class="utility">
             <button id="lang-toggle" data-action="toggle-lang">中文</button>
             <button id="theme-toggle" data-action="toggle-theme">Dark</button>
           </div>
-          
         </div>
       </header>
+
+      <section class="hero-copy" id="tool">
+        <span class="decoration-line"></span>
+        <h2 class="hero-title"><span class="lang-en">Markdown To Text Converter</span><span class="lang-zh">Markdown 转纯文本工具</span></h2>
+        <p class="hero-lead">
+          <span class="lang-en">MD Convert is a browser-based utility for turning Markdown into clean plain text. It is designed for people who need readable text for email, chat, internal documentation systems, CMS fields, support replies, or note cleanup without installing software or signing in.</span>
+          <span class="lang-zh">MD Convert 是一个基于浏览器的 Markdown 转纯文本工具，适合需要将内容整理成邮件、聊天消息、内部文档系统、CMS 字段、客服回复或普通笔记文本的用户，无需安装软件，也无需登录账号。</span>
+        </p>
+        <div class="hero-points">
+          <div class="card-block">
+            <h3><span class="lang-en">What it does</span><span class="lang-zh">能做什么</span></h3>
+            <p><span class="lang-en">Paste Markdown or import a local `.md` file, then get stripped plain text immediately for reuse.</span><span class="lang-zh">支持粘贴 Markdown 或导入本地 `.md` 文件，并立即输出去格式后的纯文本。</span></p>
+          </div>
+          <div class="card-block">
+            <h3><span class="lang-en">How it works</span><span class="lang-zh">工作方式</span></h3>
+            <p><span class="lang-en">Processing happens in the browser. The tool removes Markdown formatting markers while keeping visible text content readable.</span><span class="lang-zh">处理过程在浏览器本地完成，工具会移除 Markdown 格式标记，同时尽量保留可读文本内容。</span></p>
+          </div>
+          <div class="card-block">
+            <h3><span class="lang-en">Why it matters</span><span class="lang-zh">为什么有用</span></h3>
+            <p><span class="lang-en">It saves time when the target system does not support Markdown but still needs clean text fast.</span><span class="lang-zh">当目标系统不支持 Markdown、但又需要快速得到干净文本时，这个工具能明显节省整理时间。</span></p>
+          </div>
+        </div>
+      </section>
 
       <main class="workspace" id="workspace" data-mobile-view="input">
         <div class="mobile-view-switch" aria-label="Mobile view switch">
@@ -97,6 +194,279 @@
         </section>
       </main>
 
+      <section class="notes">
+        <p id="hint" class="hint" aria-live="polite"></p>
+      </section>
+
+      <section class="content-main" id="guide">
+        <span class="decoration-line"></span>
+        <h2 class="section-title"><span class="lang-en">What This Tool Supports</span><span class="lang-zh">这个工具支持什么</span></h2>
+        <p class="page-lead lang-en">The goal is practical Markdown cleanup rather than full rendering. MD Convert focuses on common writing patterns that appear in notes, product docs, README files, support templates, and lightweight documentation.</p>
+        <p class="page-lead lang-zh">这个工具的目标是实用型 Markdown 清洗，而不是完整渲染。MD Convert 主要覆盖笔记、产品文档、README、客服模板和轻量说明文档里最常见的写作场景。</p>
+
+        <div class="summary-grid">
+          <div class="card-block">
+            <h3><span class="lang-en">Handled well</span><span class="lang-zh">处理较好的内容</span></h3>
+            <ul class="compact-list">
+              <li><span class="lang-en">Headings, ordered and unordered lists, links, blockquotes, inline code, emphasis, and horizontal rules.</span><span class="lang-zh">标题、有序与无序列表、链接、引用、行内代码、强调和分隔线。</span></li>
+              <li><span class="lang-en">Markdown files copied from editors, note apps, docs, and repository READMEs.</span><span class="lang-zh">来自编辑器、笔记应用、文档工具和代码仓库 README 的 Markdown 文件。</span></li>
+              <li><span class="lang-en">Fast cleanup before pasting text into systems that only accept plain text.</span><span class="lang-zh">在只接受纯文本的系统里粘贴前，快速完成内容清洗。</span></li>
+            </ul>
+          </div>
+          <div class="card-block">
+            <h3><span class="lang-en">Important limits</span><span class="lang-zh">需要注意的边界</span></h3>
+            <ul class="compact-list">
+              <li><span class="lang-en">Complex Markdown extensions from specific engines may not preserve their original structure exactly.</span><span class="lang-zh">某些特定引擎的复杂 Markdown 扩展，不一定能完整保留原始结构。</span></li>
+              <li><span class="lang-en">The result is plain text, so layout-oriented formatting and rich embeds are intentionally simplified.</span><span class="lang-zh">输出结果是纯文本，因此偏版式的格式和富媒体嵌入会被有意简化。</span></li>
+              <li><span class="lang-en">Conversion happens in your browser, so this tool is designed for quick cleanup rather than long-term content storage.</span><span class="lang-zh">转换过程在浏览器本地完成，因此这个工具更适合快速清洗内容，而不是长期存储文本。</span></li>
+            </ul>
+          </div>
+        </div>
+
+        <div class="section-stack">
+          <div>
+            <h2 class="section-title"><span class="lang-en">Example Conversion</span><span class="lang-zh">转换示例</span></h2>
+            <p class="page-lead lang-en">A useful converter should make its behavior easy to understand before users trust it. The following example shows the kind of Markdown this page is designed to simplify.</p>
+            <p class="page-lead lang-zh">一个可靠的转换工具，应该让用户在使用前就能理解输出行为。下面的示例展示了此页面主要处理的 Markdown 类型。</p>
+          </div>
+          <div class="example-grid">
+            <div class="example-box">
+              <h3><span class="lang-en">Markdown input</span><span class="lang-zh">Markdown 输入</span></h3>
+              <pre># Weekly Update
+
+- Finished **release notes**
+- Fixed [signup bug](https://example.com)
+- Reviewed `config.yml`
+
+> Pending final approval.</pre>
+            </div>
+            <div class="example-box">
+              <h3><span class="lang-en">Plain text output</span><span class="lang-zh">纯文本输出</span></h3>
+              <pre>Weekly Update
+
+Finished release notes
+Fixed signup bug
+Reviewed config.yml
+
+Pending final approval.</pre>
+            </div>
+          </div>
+        </div>
+
+        <div class="section-stack">
+          <div>
+            <h2 class="section-title"><span class="lang-en">Examples Library</span><span class="lang-zh">示例库</span></h2>
+            <p class="page-lead lang-en">These examples show how the tool behaves across different Markdown patterns. They are useful when you need to know in advance whether a document will stay readable after formatting markers are removed.</p>
+            <p class="page-lead lang-zh">下面这些示例展示了工具在不同 Markdown 场景下的处理方式。若你想提前判断一份文档在去掉格式标记后是否仍然清晰可读，这部分最有参考价值。</p>
+          </div>
+          <div class="summary-grid">
+            <div class="example-box">
+              <h3><span class="lang-en">Lists and emphasis</span><span class="lang-zh">列表与强调</span></h3>
+              <pre>Markdown
+- Review **draft**
+- Confirm *timeline*
+
+Output
+Review draft
+Confirm timeline</pre>
+            </div>
+            <div class="example-box">
+              <h3><span class="lang-en">Links and inline code</span><span class="lang-zh">链接与行内代码</span></h3>
+              <pre>Markdown
+Use [portal](https://example.com)
+Open `settings.json`
+
+Output
+Use portal
+Open settings.json</pre>
+            </div>
+            <div class="example-box">
+              <h3><span class="lang-en">Quotes and headings</span><span class="lang-zh">引用与标题</span></h3>
+              <pre>Markdown
+## Release Notes
+> Final review pending
+
+Output
+Release Notes
+Final review pending</pre>
+            </div>
+            <div class="example-box">
+              <h3><span class="lang-en">Images and alt text</span><span class="lang-zh">图片与替代文本</span></h3>
+              <pre>Markdown
+![Homepage preview](hero.png)
+
+Output
+Homepage preview</pre>
+            </div>
+            <div class="example-box">
+              <h3><span class="lang-en">Code blocks</span><span class="lang-zh">代码块</span></h3>
+              <pre>Markdown
+```bash
+npm run build
+```
+
+Output
+npm run build</pre>
+            </div>
+            <div class="example-box">
+              <h3><span class="lang-en">Horizontal rules</span><span class="lang-zh">分隔线</span></h3>
+              <pre>Markdown
+Intro
+---
+Summary
+
+Output
+Intro
+
+Summary</pre>
+            </div>
+          </div>
+        </div>
+
+        <div class="section-stack">
+          <div>
+            <h2 class="section-title"><span class="lang-en">Processing Rules</span><span class="lang-zh">处理规则</span></h2>
+            <p class="page-lead lang-en">The converter is intentionally opinionated. Instead of trying to preserve every Markdown engine feature, it keeps visible text readable and removes markup that would get in the way in plain-text environments.</p>
+            <p class="page-lead lang-zh">这个转换器有明确的处理原则。它不会试图保留每个 Markdown 引擎的全部特性，而是优先让可见文本在纯文本环境中保持可读，并移除会造成干扰的标记。</p>
+          </div>
+          <div class="content-grid">
+            <div class="card-block">
+              <h3><span class="lang-en">Headings and quotes</span><span class="lang-zh">标题与引用</span></h3>
+              <p><span class="lang-en">Heading markers such as `#` and quote markers such as `>` are removed, but the actual text content is preserved line by line.</span><span class="lang-zh">像 `#` 这样的标题标记和 `>` 这样的引用标记会被移除，但文本内容会逐行保留下来。</span></p>
+            </div>
+            <div class="card-block">
+              <h3><span class="lang-en">Lists</span><span class="lang-zh">列表</span></h3>
+              <p><span class="lang-en">Ordered and unordered list symbols are stripped so the result reads as clean sequential lines rather than presentation markup.</span><span class="lang-zh">有序和无序列表符号会被去掉，使输出更像干净的连续文本，而不是展示型标记。</span></p>
+            </div>
+            <div class="card-block">
+              <h3><span class="lang-en">Links and images</span><span class="lang-zh">链接与图片</span></h3>
+              <p><span class="lang-en">For links, the visible label is kept while the URL is removed. For images, the alt text is kept because it usually carries the meaningful description.</span><span class="lang-zh">对于链接，会保留可见标签并移除 URL；对于图片，会保留替代文本，因为那通常才是有意义的描述。</span></p>
+            </div>
+            <div class="card-block">
+              <h3><span class="lang-en">Code blocks and spacing</span><span class="lang-zh">代码块与空行</span></h3>
+              <p><span class="lang-en">Fence markers are removed from code blocks, and repeated empty lines are compressed so the final output stays compact and easier to paste elsewhere.</span><span class="lang-zh">代码块的围栏标记会被移除，重复空行会被压缩，以便最终结果更紧凑、更适合粘贴到其他系统中。</span></p>
+            </div>
+          </div>
+        </div>
+
+        <div class="section-stack">
+          <div>
+            <h2 class="section-title"><span class="lang-en">Edge Cases and Limits</span><span class="lang-zh">边界情况与限制</span></h2>
+            <p class="page-lead lang-en">Not every Markdown construct carries over neatly into plain text. These edge cases are where users most often notice differences between the original document and the simplified output.</p>
+            <p class="page-lead lang-zh">并不是所有 Markdown 结构都能自然地转成纯文本。下面这些边界情况，正是用户最容易感受到“原文和输出有差异”的地方。</p>
+          </div>
+          <div class="content-grid">
+            <div class="card-block">
+              <h3><span class="lang-en">Tables</span><span class="lang-zh">表格</span></h3>
+              <p><span class="lang-en">Markdown table syntax is not preserved as a visual table. The raw rows may still appear, but column alignment is not treated as a layout feature.</span><span class="lang-zh">Markdown 表格语法不会以可视化表格形式保留。行内容可能仍会出现，但列对齐不会作为版式功能处理。</span></p>
+            </div>
+            <div class="card-block">
+              <h3><span class="lang-en">Task lists</span><span class="lang-zh">任务列表</span></h3>
+              <p><span class="lang-en">Checklist syntax such as `- [x]` or `- [ ]` may lose its checkbox meaning and be reduced to plain list text.</span><span class="lang-zh">像 `- [x]` 或 `- [ ]` 这样的清单语法可能不会保留勾选含义，而是被简化成普通列表文本。</span></p>
+            </div>
+            <div class="card-block">
+              <h3><span class="lang-en">Nested structures</span><span class="lang-zh">嵌套结构</span></h3>
+              <p><span class="lang-en">Deeply nested lists, quotes, or mixed blocks may read flatter after conversion because the goal is clarity in plain-text contexts rather than full structural fidelity.</span><span class="lang-zh">较深层的嵌套列表、引用或混合块在转换后可能显得更扁平，因为目标是提升纯文本场景中的清晰度，而不是完整保留结构层级。</span></p>
+            </div>
+            <div class="card-block">
+              <h3><span class="lang-en">Footnotes and extensions</span><span class="lang-zh">脚注与扩展语法</span></h3>
+              <p><span class="lang-en">Engine-specific extensions such as footnotes, definition lists, or advanced directives are not guaranteed to survive in a meaningful way.</span><span class="lang-zh">像脚注、定义列表或高级指令这类引擎私有扩展，并不保证能以有意义的形式保留下来。</span></p>
+            </div>
+          </div>
+        </div>
+
+        <div class="section-stack">
+          <div>
+            <h2 class="section-title"><span class="lang-en">Common Use Cases</span><span class="lang-zh">常见使用场景</span></h2>
+          </div>
+          <div class="content-grid">
+            <div class="card-block">
+              <h3><span class="lang-en">Documentation cleanup</span><span class="lang-zh">文档清洗</span></h3>
+              <p><span class="lang-en">Turn README content or internal docs into plain text for ticket systems, changelog summaries, or approval workflows.</span><span class="lang-zh">把 README 或内部文档内容整理成工单系统、变更摘要或审批流程可用的纯文本。</span></p>
+            </div>
+            <div class="card-block">
+              <h3><span class="lang-en">Operations and support</span><span class="lang-zh">运营与客服</span></h3>
+              <p><span class="lang-en">Prepare FAQ snippets, canned responses, and product notices for platforms that strip formatting anyway.</span><span class="lang-zh">为本身就会去格式的平台准备 FAQ 片段、快捷回复和产品通知文本。</span></p>
+            </div>
+            <div class="card-block">
+              <h3><span class="lang-en">CMS publishing</span><span class="lang-zh">CMS 发布</span></h3>
+              <p><span class="lang-en">Extract readable text before moving content into form fields that do not support Markdown syntax.</span><span class="lang-zh">在把内容粘贴进不支持 Markdown 的后台字段前，先提取出可读纯文本。</span></p>
+            </div>
+            <div class="card-block">
+              <h3><span class="lang-en">Personal notes</span><span class="lang-zh">个人笔记</span></h3>
+              <p><span class="lang-en">Simplify meeting notes and drafts when you only need the text itself without formatting markers.</span><span class="lang-zh">当你只需要文字本身、不需要格式标记时，可快速简化会议纪要和草稿内容。</span></p>
+            </div>
+          </div>
+        </div>
+
+        <div class="section-stack">
+          <div>
+            <h2 class="section-title"><span class="lang-en">Markdown Guide</span><span class="lang-zh">Markdown 指南</span></h2>
+            <p class="page-lead lang-en">MD Convert focuses on common Markdown syntax that appears in notes, READMEs, product docs, and lightweight documentation workflows.</p>
+            <p class="page-lead lang-zh">MD Convert 主要处理笔记、README、产品文档和轻量说明文档中最常见的 Markdown 语法。</p>
+          </div>
+          <div class="summary-grid">
+            <div class="example-box">
+              <h3><span class="lang-en">Basic syntax</span><span class="lang-zh">基础语法</span></h3>
+              <pre># Heading
+**Bold** and *Italic*
+- Item A
+- Item B
+[Link](https://example.com)</pre>
+            </div>
+            <div class="example-box">
+              <h3><span class="lang-en">Code and quotes</span><span class="lang-zh">代码与引用</span></h3>
+              <pre>Inline: `const x = 1`
+
+> A quoted line
+
+```js
+function hello() {
+  console.log("Hi");
+}
+```</pre>
+            </div>
+          </div>
+          <div class="content-grid">
+            <div class="card-block">
+              <h3><span class="lang-en">Why Markdown is useful</span><span class="lang-zh">Markdown 为什么实用</span></h3>
+              <p><span class="lang-en">It stays readable in raw text, works across editors, and fits version-controlled writing workflows.</span><span class="lang-zh">它在纯文本状态下也易读，可跨编辑器使用，并适合版本管理下的写作流程。</span></p>
+            </div>
+            <div class="card-block">
+              <h3><span class="lang-en">Conversion behavior</span><span class="lang-zh">转换行为</span></h3>
+              <p><span class="lang-en">The tool removes Markdown markers and keeps visible text. Rich layout, embeds, and engine-specific extensions are simplified.</span><span class="lang-zh">工具会移除 Markdown 标记并保留可见文本。复杂排版、嵌入内容和引擎私有扩展会被简化。</span></p>
+            </div>
+          </div>
+        </div>
+
+        <div class="section-stack" id="faq">
+          <div>
+            <h2 class="section-title">FAQ</h2>
+          </div>
+          <div class="content-grid">
+            <div class="card-block"><h3><span class="lang-en">What syntax is supported?</span><span class="lang-zh">支持哪些语法？</span></h3><p><span class="lang-en">Headings, lists, links, image alt text, code, emphasis and blockquotes.</span><span class="lang-zh">支持标题、列表、链接、图片替代文本、代码、强调和引用。</span></p></div>
+            <div class="card-block"><h3><span class="lang-en">Can I import .md files?</span><span class="lang-zh">能导入 .md 文件吗？</span></h3><p><span class="lang-en">Yes, by drag and drop or the import button in the converter.</span><span class="lang-zh">可以，支持拖拽导入和转换器中的导入按钮。</span></p></div>
+            <div class="card-block"><h3><span class="lang-en">Is conversion local?</span><span class="lang-zh">转换是否本地进行？</span></h3><p><span class="lang-en">Yes. Conversion runs in your browser, so pasted text and imported files are processed on the client side.</span><span class="lang-zh">是。转换在浏览器本地完成，因此粘贴文本和导入文件都在客户端处理。</span></p></div>
+            <div class="card-block"><h3><span class="lang-en">What encoding is used for downloads?</span><span class="lang-zh">下载文件使用什么编码？</span></h3><p><span class="lang-en">Downloaded `.txt` files use UTF-8 for broad compatibility.</span><span class="lang-zh">下载的 `.txt` 文件使用 UTF-8 编码，兼容性更好。</span></p></div>
+            <div class="card-block"><h3><span class="lang-en">Does it support large Markdown files?</span><span class="lang-zh">支持大文件吗？</span></h3><p><span class="lang-en">It works for common file sizes. Very large files may render more slowly depending on device performance.</span><span class="lang-zh">可处理常见大小文件。超大文件在部分设备上可能渲染较慢。</span></p></div>
+            <div class="card-block"><h3><span class="lang-en">Why does output look slightly different?</span><span class="lang-zh">为什么输出和预期略有差异？</span></h3><p><span class="lang-en">Different Markdown engines support different extensions. This tool keeps a practical common subset.</span><span class="lang-zh">不同 Markdown 引擎支持的扩展语法不同；本工具采用实用的通用子集。</span></p></div>
+            <div class="card-block"><h3><span class="lang-en">Are URLs kept in the result?</span><span class="lang-zh">URL 会保留在结果里吗？</span></h3><p><span class="lang-en">Usually no. The converter keeps the visible link label and removes the destination URL, because most plain-text workflows only need the readable label.</span><span class="lang-zh">通常不会。转换器会保留可见链接文本并移除目标 URL，因为多数纯文本场景只需要可读标签。</span></p></div>
+            <div class="card-block"><h3><span class="lang-en">Can I use this for release notes?</span><span class="lang-zh">可以用于发布说明吗？</span></h3><p><span class="lang-en">Yes. Release notes, issue summaries, and internal updates are among the most practical use cases because they often need to be pasted into text-only systems.</span><span class="lang-zh">可以。发布说明、问题摘要和内部更新都是非常适合的场景，因为它们经常需要粘贴到只支持纯文本的系统里。</span></p></div>
+            <div class="card-block"><h3><span class="lang-en">Will this preserve Markdown tables?</span><span class="lang-zh">会保留 Markdown 表格吗？</span></h3><p><span class="lang-en">Not as a formatted table. If table structure matters, you should review the plain output manually before using it elsewhere.</span><span class="lang-zh">不会以格式化表格形式保留。如果表格结构很重要，建议在用于其他系统前手动检查纯文本结果。</span></p></div>
+            <div class="card-block"><h3><span class="lang-en">Does this tool require an account?</span><span class="lang-zh">这个工具需要账号吗？</span></h3><p><span class="lang-en">No. It is designed for fast, anonymous browser use without signup, installation, or extra setup.</span><span class="lang-zh">不需要。这个工具就是为快速、匿名的浏览器使用而设计的，无需注册、安装或额外配置。</span></p></div>
+            <div class="card-block"><h3><span class="lang-en">Who is this tool best for?</span><span class="lang-zh">这个工具最适合谁？</span></h3><p><span class="lang-en">It is especially useful for developers, product teams, operations staff, writers, and support teams who regularly move Markdown into plain-text workflows.</span><span class="lang-zh">它尤其适合经常把 Markdown 内容转入纯文本流程的开发者、产品团队、运营人员、写作者和客服团队。</span></p></div>
+            <div class="card-block"><h3><span class="lang-en">When should I avoid using it?</span><span class="lang-zh">什么情况下不建议使用？</span></h3><p><span class="lang-en">If your output depends on exact table layout, advanced Markdown extensions, or rich visual formatting, a plain-text converter may be too destructive for that task.</span><span class="lang-zh">如果你的输出依赖精确表格布局、高级 Markdown 扩展或丰富的视觉排版，那么纯文本转换器可能会过度简化该任务。</span></p></div>
+          </div>
+        </div>
+        <div class="card-block" style="margin-top:1.2rem;">
+          <h3><span class="lang-en">Policies</span><span class="lang-zh">政策页面</span></h3>
+          <div class="inline-links">
+            <a href="privacy.html"><span class="lang-en">Privacy Policy</span><span class="lang-zh">隐私政策</span></a>
+            <a href="terms.html"><span class="lang-en">Terms of Use</span><span class="lang-zh">使用条款</span></a>
+          </div>
+        </div>
+      </section>
+
     </div>
 
     <script src="site-common.js"></script>
@@ -114,9 +484,6 @@
       const downloadBtn = document.getElementById("download");
       const viewInputBtn = document.getElementById("view-input");
       const viewOutputBtn = document.getElementById("view-output");
-      const HISTORY_KEY = "md_convert_history_v1";
-      const HISTORY_LIMIT = 100;
-
       const sampleMarkdown = `Tip: Drag and drop a .md file into the left panel, or use Import .md.
 
 # Project Alpha
@@ -156,7 +523,6 @@ Code example:
           hintNoCopy: "Nothing to copy.",
           hintCopied: "Copied to clipboard.",
           hintCopyFail: "Copy failed. Please copy manually.",
-          storageFail: "History storage is unavailable in this browser.",
         },
         zh: {
           import: "导入 .md",
@@ -179,7 +545,6 @@ Code example:
           hintNoCopy: "没有可复制内容。",
           hintCopied: "已复制到剪贴板。",
           hintCopyFail: "复制失败，请手动复制。",
-          storageFail: "当前浏览器无法保存历史记录。",
         },
       };
 
@@ -217,46 +582,6 @@ Code example:
         text = text.replace(/\n{3,}/g, "\n\n");
 
         return text.trim();
-      }
-
-      function getHistory() {
-        try {
-          const raw = localStorage.getItem(HISTORY_KEY);
-          const parsed = raw ? JSON.parse(raw) : [];
-          return Array.isArray(parsed) ? parsed : [];
-        } catch {
-          return [];
-        }
-      }
-
-      function saveHistory(items) {
-        try {
-          localStorage.setItem(HISTORY_KEY, JSON.stringify(items));
-        } catch {
-          setHint(t("storageFail"));
-        }
-      }
-
-      function addHistoryEntry(sourceName = "manual_input.md") {
-        const markdown = input.value;
-        const plainText = output.textContent || markdownToText(markdown);
-        if (!plainText) return;
-
-        const history = getHistory();
-        const latest = history[0];
-        const isDuplicate = latest && latest.markdown === markdown && latest.plainText === plainText && latest.sourceName === sourceName;
-        if (isDuplicate) return;
-
-        history.unshift({
-          id: `${Date.now()}_${Math.random().toString(36).slice(2, 8)}`,
-          sourceName,
-          markdown,
-          plainText,
-          length: plainText.length,
-          createdAt: new Date().toISOString(),
-        });
-
-        saveHistory(history.slice(0, HISTORY_LIMIT));
       }
 
       function render() {
@@ -300,7 +625,6 @@ Code example:
           const content = await file.text();
           input.value = content;
           render();
-          addHistoryEntry(file.name);
           setHint(t("hintImported", { name: file.name }));
         } catch {
           setHint(t("hintReadFail"));
@@ -323,7 +647,6 @@ Code example:
         link.click();
         link.remove();
         URL.revokeObjectURL(url);
-        addHistoryEntry("downloaded_output.md");
         setHint(t("hintDownloaded"));
       }
 
@@ -359,7 +682,6 @@ Code example:
       sampleBtn.addEventListener("click", () => {
         input.value = sampleMarkdown;
         render();
-        addHistoryEntry("sample.md");
         setHint(t("hintSample"));
       });
 
@@ -379,7 +701,6 @@ Code example:
 
         try {
           await navigator.clipboard.writeText(text);
-          addHistoryEntry("copied_output.md");
           const originalText = t("copy");
           copyBtn.textContent = t("copied");
           setHint(t("hintCopied"));
@@ -399,6 +720,7 @@ Code example:
       input.value = sampleMarkdown;
       render();
       updateLocalizedUi();
+      setHint(t("hintDefault"));
       setMobileView("input");
     </script>
   </body>
